@@ -1,3 +1,5 @@
+import { UsersModule } from './users/users.module';
+import { UsersService } from './users/users.service';
 import { RolesModule } from './roles/roles.module';
 import { RolesService } from './roles/roles.service';
 import { UsersController } from './users/users.controller';
@@ -12,6 +14,7 @@ import { User } from './users/entitys/user.entity';
 
 @Module({
   imports: [
+    UsersModule,
     RolesModule,
     ProfilesModule,
     TypeOrmModule.forRoot({

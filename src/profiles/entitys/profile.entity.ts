@@ -10,21 +10,21 @@ export class Profile{
     @Column({length: 255})
     name: string;
 
-    @Column()
+    @Column({nullable: true})
     birthDate: Date;
 
-    @Column("longtext")
+    @Column("longtext",{nullable: true})
     linkedIn: string;
 
-    @Column("longtext")
+    @Column("longtext",{nullable: true})
     github: string;
 
-    @Column("longtext")
+    @Column("longtext",{nullable: true})
     site: string;
 
-    @Column({length: 255})
+    @Column({length: 255,nullable: true})
     alternativeEmail: string;
 
-    @Column("longtext")
+    @Column("longtext",{nullable: true})
     aboutMe: string;
 }

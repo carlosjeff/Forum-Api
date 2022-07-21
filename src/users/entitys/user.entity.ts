@@ -1,3 +1,4 @@
+import { isDate, IsEmail } from "class-validator";
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Profile } from "../../profiles/entitys/profile.entity";
 import { Role } from "../../roles/entitys/role.entity";
@@ -8,7 +9,7 @@ export class User{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({length: 255})
+    @Column({length: 100})
     userName:string;
 
     @Column({length: 255})
@@ -20,8 +21,11 @@ export class User{
     @Column()
     data: Date
 
+    @Column()
+    roleId: number;
+
     @ManyToOne(() => Role)
-    role: Role;
+    role?: Role;
 
     @OneToOne(() => Profile)
     @JoinColumn()

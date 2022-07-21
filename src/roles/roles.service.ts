@@ -40,7 +40,7 @@ export class RolesService {
         return await this.rolesRepository.find();
     }
 
-    public async Delete(id: number) {
+    public async delete(id: number) {
 
         if(!this.isExist(id)) throw new NotFoundException(`Id ${id} não encontrado`);
 

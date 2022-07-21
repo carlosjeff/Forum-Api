@@ -2,7 +2,27 @@
 https://docs.nestjs.com/controllers#controllers
 */
 
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
+import { ProfilesService } from 'src/profiles/profiles.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UsersService } from './users.service';
 
-@Controller()
-export class UsersController { }
+
+@Controller('/users')
+export class UsersController {
+
+    constructor(
+        private usersService: UsersService,
+       
+        ) {
+        
+    }
+
+    @Post()
+    public async create(@Body() createDto: CreateUserDto){
+
+        return this.usersService.create(createDto);
+    }
+
+
+ }
