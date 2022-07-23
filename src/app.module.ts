@@ -1,3 +1,6 @@
+import { ColorsModule } from './colors/colors.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
 import { UsersModule } from './users/users.module';
 import { UsersService } from './users/users.service';
 import { RolesModule } from './roles/roles.module';
@@ -14,6 +17,8 @@ import { User } from './users/entitys/user.entity';
 
 @Module({
   imports: [
+    ColorsModule,
+    AuthModule,
     UsersModule,
     RolesModule,
     ProfilesModule,

@@ -8,6 +8,8 @@ import { Role } from './entitys/role.entity';
 @Injectable()
 export class RolesService {
 
+    
+
     constructor(
         @InjectRepository(Role) private rolesRepository: Repository<Role>
     ) { }
@@ -37,6 +39,8 @@ export class RolesService {
     }
 
     public async getAll() {
+        console.log('getAll');
+        
         return await this.rolesRepository.find();
     }
 

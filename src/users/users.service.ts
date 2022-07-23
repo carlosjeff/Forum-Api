@@ -3,13 +3,14 @@ import { User } from './entitys/user.entity';
 https://docs.nestjs.com/providers#services
 */
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm/repository/Repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ProfilesService } from 'src/profiles/profiles.service';
 import { Profile } from 'src/profiles/entitys/profile.entity';
 import * as bcrypt from 'bcrypt';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService { 
@@ -25,8 +26,37 @@ export class UsersService {
             .then(user => this.usersRepository.save(user));               
     }
 
+    public async updateUserName(id: number, updateDto: UpdateUserDto){
+
+        const user = await this.isExist(id);
+
+        if(!user) throw new NotFoundException(`Id ${id} não encontrado`);
+
+        await this.usersRepository.update({ id }, updateDto);
+
+        return {id,...user, ...updateDto};
+    }
+
+    public async getById(id: number){
+        
+        const user = await this.usersRepository.findOne( { where: {id}, relations: { profile: true } } );
+
+        if(!user) throw new NotFoundException(`Id ${id} não encontrado`);
+
+        return user;
+
+    }
+
+    public async getByEmail(email: string){
+        
+        return this.usersRepository.findOne({where: {email},relations: { role: true }});
+    }
 
 
+    private async isExist(id: number){
+
+        return await this.usersRepository.findOne( { where: {id}});
+    }
 
     private  createUserObj(createDto: CreateUserDto, profile: Profile){
         
@@ -40,8 +70,6 @@ export class UsersService {
                 profile: profile
             } as User
         })
-
-         
     }
 
     private async hashing(password: string){
