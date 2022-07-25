@@ -28,7 +28,7 @@ export class UsersService {
 
     public async updateUserName(id: number, updateDto: UpdateUserDto){
 
-        const user = await this.isExist(id);
+        const user = await this.getById(id);
 
         if(!user) throw new NotFoundException(`Id ${id} não encontrado`);
 
@@ -38,24 +38,13 @@ export class UsersService {
     }
 
     public async getById(id: number){
-        
-        const user = await this.usersRepository.findOne( { where: {id}, relations: { profile: true } } );
-
-        if(!user) throw new NotFoundException(`Id ${id} não encontrado`);
-
-        return user;
-
+          
+        return await this.usersRepository.findOne( { where: {id}, relations: { profile: true } } );
     }
 
     public async getByEmail(email: string){
         
         return this.usersRepository.findOne({where: {email},relations: { role: true }});
-    }
-
-
-    private async isExist(id: number){
-
-        return await this.usersRepository.findOne( { where: {id}});
     }
 
     private  createUserObj(createDto: CreateUserDto, profile: Profile){

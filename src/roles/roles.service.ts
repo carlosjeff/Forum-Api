@@ -22,7 +22,7 @@ export class RolesService {
 
     public async update(id: number, updateDto: UpdateRoleDto): Promise<Role> {
         
-        if(!this.isExist(id)) throw new NotFoundException(`Id ${id} não encontrado`);
+        if(!this.getById(id)) throw new NotFoundException(`Id ${id} não encontrado`);
 
         await this.rolesRepository.update({ id }, updateDto);
 
@@ -31,11 +31,7 @@ export class RolesService {
 
     public async getById(id: number): Promise<Role> {
 
-        const role = await this.isExist(id);
-
-        if(!role) throw new NotFoundException(`Id ${id} não encontrado`);
-
-        return role
+        return await this.rolesRepository.findOne( { where: {id} } );
     }
 
     public async getAll() {
@@ -46,15 +42,11 @@ export class RolesService {
 
     public async delete(id: number) {
 
-        if(!this.isExist(id)) throw new NotFoundException(`Id ${id} não encontrado`);
+        if(!this.getById(id)) throw new NotFoundException(`Id ${id} não encontrado`);
 
         await this.rolesRepository.delete(id)
 
         return `O registro com o id ${id} foi deletada com sucesso!`;
     }
-    
-    private async isExist(id: number){
 
-        return await this.rolesRepository.findOne( { where: {id} } );
-    }
 }

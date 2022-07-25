@@ -18,7 +18,7 @@ export class ProfilesService {
 
     public async update(id: number, updateDto: UpdateProfileDto): Promise<Profile> {
         
-        if(!this.isExist(id)) throw new NotFoundException(`Id ${id} não encontrado`);
+        if(!this.getById(id)) throw new NotFoundException(`Id ${id} não encontrado`);
 
         await this.profilesRepository.update({ id }, updateDto);
 
@@ -27,25 +27,17 @@ export class ProfilesService {
 
     public async getById(id: number): Promise<Profile> {
 
-        const profile = await this.isExist(id);
-
-        if(!profile) throw new NotFoundException(`Id ${id} não encontrado`);
-
-        return profile
+        return await this.profilesRepository.findOne( { where: {id} } );
     }
 
     public async delete(id: number) {
 
-        if(!this.isExist(id)) throw new NotFoundException(`Id ${id} não encontrado`);
+        if(!this.getById(id)) throw new NotFoundException(`Id ${id} não encontrado`);
 
         await this.profilesRepository.delete(id)
 
         return `O registro com o id ${id} foi deletada com sucesso!`;
     }
-    
-    private async isExist(id: number){
 
-        return await this.profilesRepository.findOne( { where: {id} } );
-    }
     
 }

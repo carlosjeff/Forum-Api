@@ -1,3 +1,15 @@
+import { ReplyTopic } from './reply-topics/entity/reaply-topic.entity';
+import { ReplyTopicsModule } from './reply-topics/reply-topics.module';
+import { Topic } from './topics/entity/topic.entity';
+import { TopicsModule } from './topics/topics.module';
+import { Status } from './status/entity/status.entity';
+import { StatusModule } from './status/status.module';
+import { Subcategory } from './subcategory/entity/subcategory.entity';
+import { SubcategorysModule } from './subcategory/subcategorys.module';
+import { CategorysModule } from './categorys/categorys.module';
+import { CategorysService } from './categorys/categorys.service';
+import { Category } from './categorys/entity/category.entity';
+import { Color } from './colors/entity/color.entity';
 import { ColorsModule } from './colors/colors.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthService } from './auth/auth.service';
@@ -17,6 +29,11 @@ import { User } from './users/entitys/user.entity';
 
 @Module({
   imports: [
+    ReplyTopicsModule,
+    TopicsModule,
+    StatusModule,
+    SubcategorysModule,
+    CategorysModule,
     ColorsModule,
     AuthModule,
     UsersModule,
@@ -32,12 +49,16 @@ import { User } from './users/entitys/user.entity';
       entities: [
         Profile,
         Role,
-        User
+        User,
+        Color,
+        Category,
+        Subcategory,
+        Status,
+        Topic,
+        ReplyTopic
       ],
       synchronize: true,
     }),
-  ],
-  controllers: [],
-  providers: [],
+  ]
 })
 export class AppModule { }

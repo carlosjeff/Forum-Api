@@ -1,11 +1,10 @@
 import { IsNotEmpty, IsString, MaxLength } from "class-validator";
 
-
-
-export class CreateRoleDto{
-
+export class CreateStatusDto {
+  
     @IsString()
     @MaxLength(100)
     @IsNotEmpty()
-    name: string;
+    name: string
+   
 }
