@@ -2,10 +2,6 @@ import { UpdateReplyTopicDto } from './dto/update-reply-topic.dto';
 import { CreateReplyTopicDto } from './dto/create-reply-topic.dto';
 import { Repository } from 'typeorm/repository/Repository';
 import { ReplyTopic } from './entity/reaply-topic.entity';
-/*
-https://docs.nestjs.com/providers#services
-*/
-
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 

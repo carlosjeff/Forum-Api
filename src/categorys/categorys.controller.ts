@@ -2,13 +2,9 @@ import { Category } from './entity/category.entity';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { CategorysService } from './categorys.service';
-/*
-https://docs.nestjs.com/controllers#controllers
-*/
-
 import { Body, Controller, Get, Param, Post, ParseIntPipe, Put, Delete } from '@nestjs/common';
 
-@Controller('category')
+@Controller('categorys')
 export class CategorysController {
 
     constructor(private categorysService: CategorysService) { }

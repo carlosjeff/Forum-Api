@@ -4,7 +4,7 @@ import { UpdateProfileDto } from './dto/update-profile.dto';
 import { ProfilesService } from './profiles.service';
 
 
-@Controller()
+@Controller('profiles')
 export class ProfilesController {
 
     constructor(private profileService: ProfilesService) { }

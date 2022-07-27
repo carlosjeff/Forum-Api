@@ -1,7 +1,8 @@
 import { Topic } from './../../topics/entity/topic.entity';
 import { User } from 'src/users/entitys/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { Reply } from 'src/replys/entity/reply.entity';
 
 @Entity('reply-topic')
 export class ReplyTopic {
@@ -28,5 +29,9 @@ export class ReplyTopic {
     @Column()
     @Exclude()
     topicId: number;
+
+
+    @OneToMany(() => Reply, (reply) => reply.replyTopic)
+    replys : Reply[]
    
 }

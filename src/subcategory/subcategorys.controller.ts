@@ -3,7 +3,7 @@ import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
 import { SubcategorysService } from './subcategorys.service';
 import { Body, Controller, Get, Param, Post, ParseIntPipe, Put, Delete } from '@nestjs/common';
 
-@Controller('subcategory')
+@Controller('subcategorys')
 export class SubcategorysController {
 
     constructor(private subcagorysService: SubcategorysService) { }

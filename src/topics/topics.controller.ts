@@ -4,7 +4,7 @@ import { CreateRoleDto } from './../roles/dto/create-role.dto';
 import { TopicsService } from './topics.service';
 import { Body, Controller, Get, Param, Post, ParseIntPipe, Put, Delete } from '@nestjs/common';
 
-@Controller()
+@Controller('topics')
 export class TopicsController {
 
     constructor(private topicsService: TopicsService) {

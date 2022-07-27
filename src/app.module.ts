@@ -1,3 +1,5 @@
+import { Reply } from 'src/replys/entity/reply.entity';
+import { ReplysModule } from './replys/replys.module';
 import { ReplyTopic } from './reply-topics/entity/reaply-topic.entity';
 import { ReplyTopicsModule } from './reply-topics/reply-topics.module';
 import { Topic } from './topics/entity/topic.entity';
@@ -29,6 +31,7 @@ import { User } from './users/entitys/user.entity';
 
 @Module({
   imports: [
+    ReplysModule,
     ReplyTopicsModule,
     TopicsModule,
     StatusModule,
@@ -55,7 +58,8 @@ import { User } from './users/entitys/user.entity';
         Subcategory,
         Status,
         Topic,
-        ReplyTopic
+        ReplyTopic, 
+        Reply
       ],
       synchronize: true,
     }),
