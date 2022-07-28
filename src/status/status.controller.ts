@@ -5,8 +5,11 @@ import { StatusService } from './status.service';
 https://docs.nestjs.com/controllers#controllers
 */
 
-import { Body, Controller, Delete, Get, Param, Post, Put, ParseIntPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { Status } from './entity/status.entity';
+import { Roles } from 'src/shared/decorators/role.decorator';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { RoleGuard } from 'src/shared/guards/role.guard';
 
 @Controller()
 export class StatusController {
@@ -15,6 +18,8 @@ export class StatusController {
         
     }
 
+    @Roles('admin')
+    @UseGuards(JwtAuthGuard,RoleGuard)
     @Post()
     public async create(@Body() createDto: CreateStatusDto): Promise<Status> { 
         
@@ -33,12 +38,16 @@ export class StatusController {
         return this.statusService.getById(id); 
     }
 
+    @Roles('admin')
+    @UseGuards(JwtAuthGuard,RoleGuard)
     @Put(':id')
     public async update(@Param('id', ParseIntPipe) id: number, @Body() updateDto: UpdateStatusDto): Promise<Status> { 
         
         return this.statusService.update(id, updateDto); 
     }
 
+    @Roles('admin')
+    @UseGuards(JwtAuthGuard,RoleGuard)
     @Delete(':id')
     public async delete(@Param('id', ParseIntPipe) id: number): Promise<string> { 
         

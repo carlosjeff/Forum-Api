@@ -1,13 +1,18 @@
 import { ColorsService } from './colors.service';
 import { CreateColorDto } from './dto/create-color.dto';
-import { Controller, Get, Param, Post, ParseIntPipe, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, ParseIntPipe, Body, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { RoleGuard } from 'src/shared/guards/role.guard';
+import { Roles } from 'src/shared/decorators/role.decorator';
+
 
 @Controller('colors')
 export class ColorsController {
 
     constructor(private colorsServices: ColorsService) {}
 
-
+    @Roles('admin')
+    @UseGuards(JwtAuthGuard,RoleGuard)
     @Post()
     public async create(@Body() createDto: CreateColorDto) {
        

@@ -1,5 +1,8 @@
-import { Body, ClassSerializerInterceptor, Controller, Get, Param, ParseIntPipe, Post, Put, UseInterceptors } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Get, Param, ParseIntPipe, Post, Put, UseGuards, UseInterceptors } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { ProfilesService } from 'src/profiles/profiles.service';
+import { Roles } from 'src/shared/decorators/role.decorator';
+import { RoleGuard } from 'src/shared/guards/role.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
@@ -17,6 +20,8 @@ export class UsersController {
         return this.usersService.create(createDto);
     }
 
+    @Roles('user')
+    @UseGuards(JwtAuthGuard,RoleGuard)
     @Put(':id')
     public async updateUserName(@Param('id', ParseIntPipe) id: number, @Body() updateDto: UpdateUserDto){
 
