@@ -17,7 +17,12 @@ export class CategorysService {
 
     public async getAll() {
        
-       return await this.categoryRepository.find();
+       return await this.categoryRepository.find({
+         relations: {
+            subcategorys: true,
+            color: true
+         }
+       });
     }
 
     public async getById(id: number) {

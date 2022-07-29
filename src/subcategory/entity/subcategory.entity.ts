@@ -10,7 +10,7 @@ export class Subcategory extends Pattern {
     @Exclude()
     categoryId: number
    
-    @ManyToOne(() => Category)
+    @ManyToOne(() => Category, (category) => category.subcategorys)
     category?: Category
    
 }

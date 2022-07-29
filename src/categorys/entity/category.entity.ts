@@ -1,5 +1,6 @@
+import { Subcategory } from './../../subcategory/entity/subcategory.entity';
 import { Exclude } from 'class-transformer';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { Color } from './../../colors/entity/color.entity';
 import { Pattern } from './../../shared/models/pattern';
 
@@ -12,5 +13,8 @@ export class Category extends Pattern {
 
     @ManyToOne(() => Color)
     color?: Color
+
+    @OneToMany(() => Subcategory, (subcategory) => subcategory.category)
+    subcategorys: Subcategory[]
    
 }

@@ -21,7 +21,7 @@ export class CategorysController {
        return this.categorysService.create(createDto);
     }
 
-    @Get()
+    @Get('all')
     public async getAll(): Promise<Category[]> {
        
        return this.categorysService.getAll();

@@ -19,7 +19,7 @@ export class ColorsController {
        return this.colorsServices.create(createDto);
     }
 
-    @Get()
+    @Get('all')
     public async getAll() {
        
        return this.colorsServices.getAll();
