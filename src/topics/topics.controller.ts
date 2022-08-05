@@ -1,25 +1,28 @@
+import { UsersService } from './../users/users.service';
 import { UpdateTopicDto } from './dto/update-topic.dto';
 import { CreateTopicDto } from './dto/create-topic.dto';
 import { CreateRoleDto } from './../roles/dto/create-role.dto';
 import { TopicsService } from './topics.service';
-import { Body, Controller, Get, Param, Post, ParseIntPipe, Put, Delete, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, ParseIntPipe, Put, Delete, UseGuards, Req } from '@nestjs/common';
 import { Roles } from 'src/shared/decorators/role.decorator';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RoleGuard } from 'src/shared/guards/role.guard';
+import { Request } from 'express';
 
 @Controller('topics')
 export class TopicsController {
 
-    constructor(private topicsService: TopicsService) {
+    constructor(private topicsService: TopicsService, private usersService: UsersService) {
         
     }
 
     @Roles('user')
     @UseGuards(JwtAuthGuard,RoleGuard)
     @Post()
-    public async create(@Body() createDto: CreateTopicDto) { 
+    public async create(@Body() createDto: CreateTopicDto, @Req() req: any) { 
         
-        return this.topicsService.create(createDto); 
+        return  this.usersService.getByEmail(req.user.email).
+                    then(user => this.topicsService.create({...createDto, userId: user.id}));
     }
 
     @Get()

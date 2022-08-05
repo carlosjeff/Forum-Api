@@ -13,8 +13,8 @@ export class TopicsService {
     }
 
     public async create(createDto: CreateTopicDto) { 
-        
-        return this.topicsRepository.save({...createDto, date: new Date() }); 
+
+        return this.topicsRepository.save({...createDto, date: new Date(),subcategorys: createDto.subcategorys.map(s => ({id: s})) }); 
     }
     public async getAll() { 
         
@@ -25,10 +25,24 @@ export class TopicsService {
     }
     public async getById(id: number) { 
         
-        return this.topicsRepository.findOne({where: {id}, relations: {
-            status: true,
-            user: true
-        }}); 
+        return this.topicsRepository.findOne({
+            where: { id }, 
+            select:{
+                user: {
+                    id: true,
+                    email: true,
+                    userName: true
+                }}, 
+            relations: {
+                status: true,
+                user: true,
+                subcategorys: {
+                    category: {
+                        color: true
+                    }
+                }
+            }
+        }); 
     }
     public async update(id: number, updateDto: UpdateTopicDto) { 
 

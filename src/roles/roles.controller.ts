@@ -1,11 +1,13 @@
+import { Payload } from './../shared/models/payload';
 
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards, Req } from '@nestjs/common';
 import { Roles } from 'src/shared/decorators/role.decorator';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RoleGuard } from 'src/shared/guards/role.guard';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { RolesService } from './roles.service';
+import { Request } from 'express';
 
 @Controller('/roles')
 export class RolesController {
@@ -25,8 +27,7 @@ export class RolesController {
     @Roles('admin')
     @UseGuards(JwtAuthGuard,RoleGuard)
     @Get('/all')
-    public async getAll(){
-        console.log('getAll');
+    public async getAll(@Req() req: Request){
         return this.roleService.getAll();
     }
     @Roles('user')
